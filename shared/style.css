@@ -1,0 +1,41 @@
+:root {
+    --bg: #f4f1ea;
+    --text: #3d3a36;
+    --accent: #7a8f7c;
+    --muted: #9a948a;
+
+    --font-heading: Georgia, "Times New Roman", serif;
+    --font-body: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--accent);
+}
+
+.section {
+    padding: 4rem 1.5rem;
+}
+
+.container {
+    max-width: 40rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+a {
+    color: var(--muted);
+}

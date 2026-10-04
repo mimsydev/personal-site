@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages Production
+name: Deploy to Cloudflare Workers
 on:
   push:
     branches:
@@ -9,7 +9,6 @@ jobs:
     environment: personal-site-deployment
     permissions:
       contents: read
-      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -24,9 +23,16 @@ jobs:
           cd rust
           zola build --output-dir ../dist/rust
 
-      - name: Shared Assets
+      # Later: Blazor (publish puts the site in wwwroot, so copy that, not the whole folder)
+      # - name: Build .NET (Blazor) Site
+      #   run: |
+      #     dotnet publish dotnet -c Release -o build/dotnet
+      #     cp -r build/dotnet/wwwroot dist/dotnet
+
+      - name: Shared Assets and Redirect
         run: |
           cp -r shared dist/shared
+          echo "/ /rust/ 302" > dist/_redirects
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
@@ -34,5 +40,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-

@@ -1,7 +1,8 @@
 name = "personal-site"
 compatibility_date = "2026-10-03"
-main = "./worker/index.js"
+
+routes = [{ pattern = "mimsydev.com", custom_domain = true }]
 
 [assets]
 directory = "./dist"
-binding = "ASSETS"
+not_found_handling = "404-page"

@@ -12,8 +12,8 @@ jobs:
 
       - name: Install taiki-e
         uses: taiki-e/install-action@v2
-          with:
-            tool: zola
+        with:
+          tool: zola
 
       - name: Build Rust (Zola) Site
         run: |
@@ -23,13 +23,13 @@ jobs:
       - name: Shared Assets and Redirect
         run: |
           cp -r shared dist/shared
-        echo "/ /rust 302" > dist/_redirects
+          echo "/ /rust 302" > dist/_redirects
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
-          apitoken: {{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: {{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=personal-site
-          gitHubToken: {{ secrets.GITHUB_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 

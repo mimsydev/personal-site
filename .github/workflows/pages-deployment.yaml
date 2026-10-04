@@ -24,16 +24,15 @@ jobs:
           cd rust
           zola build --output-dir ../dist/rust
 
-      - name: Shared Assets and Redirect
+      - name: Shared Assets
         run: |
           cp -r shared dist/shared
-          echo "/ /rust 302" > dist/_redirects
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # command: wrangler deploy dist --project-name=personal-site
-          # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: deploy
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
